@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<dynamic> postData(Map<String, String> body, String endpoint) async {
-  String url = 'https://5bvx0sjk-8000.inc1.devtunnels.ms';
+  String url = 'https://853b-172-190-111-47.ngrok-free.app';
   String fullUrl = '$url/$endpoint';
 
   Map<String, String> headers = {

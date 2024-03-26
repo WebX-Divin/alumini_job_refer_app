@@ -1,4 +1,5 @@
 import 'package:alumini_job_refer_app/endpoints/backEndpoints.dart';
+import 'package:alumini_job_refer_app/endpoints/tokenhandler.dart';
 import 'package:alumini_job_refer_app/screens/homeScreen.dart';
 import 'package:alumini_job_refer_app/widgets/textField.dart';
 import 'package:flutter/material.dart';
@@ -23,18 +24,13 @@ class _SignUpState extends State<SignUp> {
       final name = nameController.text;
       final email = emailController.text;
       final password = passwordController.text;
-      final confirmPassword = confirmPasswordController.text;
       final mobile = mobileController.text;
 
-      if (password != confirmPassword) {
-        // Show an error message if passwords don't match
-        return;
-      }
-
-      final response =
-          await signUp(name, email, password, confirmPassword, mobile);
+      final response = await signUp(name, email, password, mobile);
 
       if (response != null) {
+        final token = response['token'];
+        await TokenHandler.saveToken('token', token);
         // Registration successful
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const HomeScreen()));

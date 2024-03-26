@@ -1,3 +1,6 @@
+import 'package:alumini_job_refer_app/auth_screens/signup.dart';
+import 'package:alumini_job_refer_app/endpoints/backEndpoints.dart';
+import 'package:alumini_job_refer_app/endpoints/tokenhandler.dart';
 import 'package:alumini_job_refer_app/screens/homeScreen.dart';
 import 'package:alumini_job_refer_app/widgets/textField.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,30 @@ class _SignInState extends State<SignIn> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    if (formKey.currentState!.validate()) {
+      final password = passwordController.text;
+      final mobile = mobileController.text;
+
+      final response = await login(mobile, password);
+
+      if (response != null) {
+        final responseToken = await TokenHandler.getToken('token');
+        if (responseToken != null) {
+          // login success
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          print('User logined successfully');
+        } else {
+          // login success
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const SignUp()));
+          print('Invalid Token, Register again');
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +92,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                      _login();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
