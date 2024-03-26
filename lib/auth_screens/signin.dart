@@ -11,7 +11,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -35,11 +35,17 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 children: [
                   CustomTextField(
-                    textEditingController: emailController,
-                    iconData: Icons.email,
-                    hintText: 'Email',
+                    textEditingController: mobileController,
+                    iconData: Icons.phone,
+                    hintText: 'Mobile',
                     isVisible: false,
                     isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      return null;
+                    },
                   ),
                   CustomTextField(
                     textEditingController: passwordController,
@@ -47,6 +53,12 @@ class _SignInState extends State<SignIn> {
                     hintText: 'Password',
                     isVisible: true,
                     isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 8,

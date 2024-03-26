@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
 
@@ -8,15 +8,17 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final bool? isVisible;
   final bool? isEnabled;
+  String? Function(String?) validator;
 
-  const CustomTextField({
-    Key? key,
+  CustomTextField({
+    super.key,
     this.textEditingController,
     this.iconData,
     this.hintText,
+    required this.validator,
     this.isEnabled = true,
     this.isVisible = false,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -35,6 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.all(8),
       child: TextFormField(
+        validator: widget.validator,
         enabled: widget.isEnabled,
         controller: widget.textEditingController,
         obscureText: widget.isVisible!,

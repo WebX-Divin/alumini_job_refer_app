@@ -1,3 +1,4 @@
+import 'package:alumini_job_refer_app/endpoints/backEndpoints.dart';
 import 'package:alumini_job_refer_app/screens/homeScreen.dart';
 import 'package:alumini_job_refer_app/widgets/textField.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,33 @@ class _SignUpState extends State<SignUp> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
+
+  Future<void> _signUp() async {
+    if (formKey.currentState!.validate()) {
+      final name = nameController.text;
+      final email = emailController.text;
+      final password = passwordController.text;
+      final confirmPassword = confirmPasswordController.text;
+      final mobile = mobileController.text;
+
+      if (password != confirmPassword) {
+        // Show an error message if passwords don't match
+        return;
+      }
+
+      final response =
+          await signUp(name, email, password, confirmPassword, mobile);
+
+      if (response != null) {
+        // Registration successful
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+        print('User registered successfully');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +69,12 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Name',
                     isVisible: false,
                     isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
                   ),
                   CustomTextField(
                     textEditingController: emailController,
@@ -50,6 +82,25 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Email',
                     isVisible: false,
                     isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                  ),
+                  CustomTextField(
+                    textEditingController: mobileController,
+                    iconData: Icons.phone,
+                    hintText: 'Mobile',
+                    isVisible: false,
+                    isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      return null;
+                    },
                   ),
                   CustomTextField(
                     textEditingController: passwordController,
@@ -57,23 +108,32 @@ class _SignUpState extends State<SignUp> {
                     hintText: 'Password',
                     isVisible: true,
                     isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
                   ),
                   CustomTextField(
-                    textEditingController: confirmpasswordController,
+                    textEditingController: confirmPasswordController,
                     iconData: Icons.lock,
                     hintText: 'Confirm Password',
                     isVisible: true,
                     isEnabled: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please confirm your password';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 8,
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                      _signUp();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
