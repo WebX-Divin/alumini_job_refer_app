@@ -16,7 +16,7 @@ Future signUp(String name, String email, String password, String mobile) async {
       return response;
     } else {
       // Request failed with an error code
-      print("Error: ");
+      print("Error: No response from server");
     }
   } catch (error) {
     // Handle any errors that occurred during the request
@@ -38,7 +38,7 @@ Future login(String mobile, String password) async {
       return response;
     } else {
       // Request failed with an error code
-      print("Error: ");
+      print("Error: No response from server");
     }
   } catch (error) {
     // Handle any errors that occurred during the request

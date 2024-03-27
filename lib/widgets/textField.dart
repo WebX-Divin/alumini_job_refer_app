@@ -31,12 +31,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
         borderRadius: const BorderRadius.all(
-          Radius.circular(50),
+          Radius.circular(30),
         ),
       ),
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.all(8),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
         enabled: widget.isEnabled,
         controller: widget.textEditingController,

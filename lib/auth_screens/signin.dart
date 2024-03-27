@@ -6,7 +6,7 @@ import 'package:alumini_job_refer_app/widgets/textField.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+  const SignIn({super.key});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -16,6 +16,16 @@ class _SignInState extends State<SignIn> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  Future<void> _homepage() async {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+  }
+
+  Future<void> _register() async {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignUp()));
+  }
 
   Future<void> _login() async {
     if (formKey.currentState!.validate()) {
@@ -28,13 +38,10 @@ class _SignInState extends State<SignIn> {
         final responseToken = await TokenHandler.getToken('token');
         if (responseToken != null) {
           // login success
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          await _homepage();
           print('User logined successfully');
         } else {
-          // login success
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const SignUp()));
+          await _register();
           print('Invalid Token, Register again');
         }
       }

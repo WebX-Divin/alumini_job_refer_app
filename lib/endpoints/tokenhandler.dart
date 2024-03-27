@@ -1,13 +1,13 @@
-import 'package:encrypt_shared_preferences/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenHandler {
   static Future<void> saveToken(String key, String value) async {
-    EncryptedSharedPreferences prefs = EncryptedSharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
   }
 
   static Future<String?> getToken(String key) async {
-    EncryptedSharedPreferences prefs = EncryptedSharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
 }

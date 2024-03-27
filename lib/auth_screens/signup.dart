@@ -26,12 +26,12 @@ class _SignUpState extends State<SignUp> {
       final password = passwordController.text;
       final mobile = mobileController.text;
 
-      final response = await signUp(name, email, password, mobile);
+      final result = await signUp(name, email, password, mobile);
 
-      if (response != null) {
-        final token = response['token'];
-        await TokenHandler.saveToken('token', token);
+      if (result != null) {
         // Registration successful
+        String token = result["token"];
+        await TokenHandler.saveToken('token', token);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const HomeScreen()));
         print('User registered successfully');

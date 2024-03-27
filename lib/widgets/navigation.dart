@@ -1,5 +1,8 @@
 // ignore_for_file: camel_case_types
 
+import 'package:alumini_job_refer_app/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/screens/postScreen.dart';
+import 'package:alumini_job_refer_app/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 
 class navigationBar extends StatefulWidget {
@@ -42,19 +45,20 @@ class _navigationBarState extends State<navigationBar>
         });
 
         // Handle navigation based on index
-        // switch (index) {
-        //   case 0:
-        //     Navigator.pushReplacementNamed(context, '/home');
-        //     break;
-        //   case 1:
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => ()));
-        //     break;
-        //   case 2:
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => ()));
-        //     break;
-        // }
+        switch (index) {
+          case 0:
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
+            break;
+          case 1:
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PostScreen()));
+            break;
+          case 2:
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()));
+            break;
+        }
       },
       selectedItemColor: Colors.purple,
       unselectedItemColor: Colors.grey,

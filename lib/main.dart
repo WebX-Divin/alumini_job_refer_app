@@ -1,4 +1,4 @@
-import 'package:alumini_job_refer_app/screens/splashScreen.dart';
+import 'package:alumini_job_refer_app/screens/postScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home: const PostScreen(),
     );
   }
 }

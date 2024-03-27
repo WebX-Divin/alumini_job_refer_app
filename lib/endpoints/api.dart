@@ -1,22 +1,26 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'package:alumini_job_refer_app/endpoints/tokenhandler.dart';
 import 'package:http/http.dart' as http;
 
 Future<dynamic> postData(Map<String, String> body, String endpoint) async {
-  String url = 'https://853b-172-190-111-47.ngrok-free.app';
+  String url = 'https://17ec-20-161-43-236.ngrok-free.app';
   String fullUrl = '$url/$endpoint';
+  String? token = await TokenHandler.getToken('token');
 
   Map<String, String> headers = {
-    'content-Type': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token'
   };
 
-  String responseJson = jsonEncode(body);
+  final responseJson = jsonEncode(body);
+  final http.Response response =
+      await http.post(Uri.parse(fullUrl), headers: headers, body: responseJson);
   try {
-    http.Response response = await http.post(Uri.parse(fullUrl),
-        headers: headers, body: responseJson);
     if (response.statusCode == 200) {
-      return response;
+      final responseData = jsonDecode(response.body);
+      return responseData;
     }
   } catch (error) {
     print('Error from API: $error');
