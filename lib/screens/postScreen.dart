@@ -1,3 +1,4 @@
+import 'package:alumini_job_refer_app/screens/homeScreen.dart';
 import 'package:alumini_job_refer_app/screens/successScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,34 @@ class _PostScreenState extends State<PostScreen> {
   final _referralCodeController = TextEditingController();
   final _applyLinkController = TextEditingController();
 
+  void _saveChanges() {
+    //final job = _jobRoleController.text;
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const successScreen(),
+        ),
+      );
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Post Job'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+        centerTitle: true,
+        title: const Text(
+          'Post a Job',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -41,7 +65,7 @@ class _PostScreenState extends State<PostScreen> {
                     const Text(
                       'Job Details',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -92,6 +116,7 @@ class _PostScreenState extends State<PostScreen> {
                     TextFormField(
                       controller: _locationController,
                       decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.location_on),
                         labelText: 'Location',
                         border: OutlineInputBorder(),
                       ),
@@ -106,13 +131,13 @@ class _PostScreenState extends State<PostScreen> {
                     const Text(
                       'Job Type',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
                     CheckboxListTile(
-                      title: const Text('Part-time'),
+                      title: const Text('Remote'),
                       value: _isPartTime,
                       onChanged: (value) {
                         setState(() {
@@ -133,7 +158,7 @@ class _PostScreenState extends State<PostScreen> {
                     const Text(
                       'Additional Details',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -141,6 +166,7 @@ class _PostScreenState extends State<PostScreen> {
                     TextFormField(
                       controller: _salaryController,
                       decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.currency_rupee_sharp),
                         labelText: 'Salary',
                         border: OutlineInputBorder(),
                       ),
@@ -156,6 +182,7 @@ class _PostScreenState extends State<PostScreen> {
                     TextFormField(
                       controller: _referralCodeController,
                       decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.code),
                         labelText: 'Referral Code',
                         border: OutlineInputBorder(),
                       ),
@@ -164,6 +191,7 @@ class _PostScreenState extends State<PostScreen> {
                     TextFormField(
                       controller: _applyLinkController,
                       decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.link),
                         labelText: 'Apply Link',
                         border: OutlineInputBorder(),
                       ),
@@ -180,16 +208,21 @@ class _PostScreenState extends State<PostScreen> {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const successScreen(),
-                      ),
-                    );
-                  }
+                  _saveChanges();
                 },
-                child: const Text('Save'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                ),
+                child: const Text(
+                  'Post',
+                  softWrap: true,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
