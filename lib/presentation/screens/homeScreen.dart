@@ -1,7 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:alumini_job_refer_app/widgets/card.dart';
-import 'package:alumini_job_refer_app/widgets/navigation.dart';
+import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
+import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/card.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/navigation.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +14,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final jobRepository = JobRepository(JobDataProvider());
+
+  @override
+  void initState() {
+    super.initState();
+    jobRepository.fetchPosts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

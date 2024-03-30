@@ -1,4 +1,4 @@
-import 'package:alumini_job_refer_app/widgets/navigation.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/navigation.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const navigationBar(),
+      bottomNavigationBar: navigationBar(),
     );
   }
 }

@@ -1,18 +1,22 @@
-import 'package:alumini_job_refer_app/auth_screens/signup.dart';
-import 'package:alumini_job_refer_app/endpoints/backEndpoints.dart';
-import 'package:alumini_job_refer_app/endpoints/tokenhandler.dart';
-import 'package:alumini_job_refer_app/screens/homeScreen.dart';
-import 'package:alumini_job_refer_app/widgets/textField.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
+import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
+import 'package:alumini_job_refer_app/presentation/auth_screens/signup.dart';
+import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
+
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  const SignIn({Key? key}) : super(key: key);
 
   @override
   State<SignIn> createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+  final jobRepository = JobRepository(JobDataProvider());
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -32,7 +36,7 @@ class _SignInState extends State<SignIn> {
       final password = passwordController.text;
       final mobile = mobileController.text;
 
-      final response = await login(mobile, password);
+      final response = await jobRepository.login(mobile, password);
 
       if (response != null) {
         final responseToken = await TokenHandler.getToken('token');

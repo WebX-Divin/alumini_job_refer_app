@@ -1,6 +1,9 @@
-import 'package:alumini_job_refer_app/screens/homeScreen.dart';
-import 'package:alumini_job_refer_app/screens/successScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/successScreen.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/data_provider/job_data_provider.dart';
+import '../../data/repository/job_repository.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -10,6 +13,8 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  final jobRepository = JobRepository(JobDataProvider());
+
   final _formKey = GlobalKey<FormState>();
 
   final _jobRoleController = TextEditingController();
@@ -22,15 +27,30 @@ class _PostScreenState extends State<PostScreen> {
   final _referralCodeController = TextEditingController();
   final _applyLinkController = TextEditingController();
 
-  void _saveChanges() {
+  void _saveChanges() async {
     //final job = _jobRoleController.text;
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const successScreen(),
-        ),
-      );
+      String role = _jobRoleController.text;
+      String companyName = _companyNameController.text;
+      String description = _jobDescriptionController.text;
+      String location = _locationController.text;
+      bool remote = _isPartTime;
+      bool fullTime = _isOffice;
+      String salary = _salaryController.text;
+      String referal = _referralCodeController.text;
+      String link = _applyLinkController.text;
+
+      final result = await jobRepository.createPost(role, companyName,
+          description, location, remote, fullTime, salary, referal, link);
+
+      if (result != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const successScreen(),
+          ),
+        );
+      }
     }
     setState(() {});
   }

@@ -1,7 +1,8 @@
-import 'package:alumini_job_refer_app/endpoints/backEndpoints.dart';
-import 'package:alumini_job_refer_app/endpoints/tokenhandler.dart';
-import 'package:alumini_job_refer_app/screens/homeScreen.dart';
-import 'package:alumini_job_refer_app/widgets/textField.dart';
+import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
+import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
+import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
+import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -12,6 +13,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final jobRepository = JobRepository(JobDataProvider());
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -26,7 +28,7 @@ class _SignUpState extends State<SignUp> {
       final password = passwordController.text;
       final mobile = mobileController.text;
 
-      final result = await signUp(name, email, password, mobile);
+      final result = await jobRepository.signUp(name, email, password, mobile);
 
       if (result != null) {
         // Registration successful

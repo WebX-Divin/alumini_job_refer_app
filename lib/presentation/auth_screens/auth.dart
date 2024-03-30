@@ -1,5 +1,5 @@
-import 'package:alumini_job_refer_app/auth_screens/signin.dart';
-import 'package:alumini_job_refer_app/auth_screens/signup.dart';
+import 'package:alumini_job_refer_app/presentation/auth_screens/signin.dart';
+import 'package:alumini_job_refer_app/presentation/auth_screens/signup.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {

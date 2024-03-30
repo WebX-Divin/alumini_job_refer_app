@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:alumini_job_refer_app/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
 
 class successScreen extends StatelessWidget {
   const successScreen({

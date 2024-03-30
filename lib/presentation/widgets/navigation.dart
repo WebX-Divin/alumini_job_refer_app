@@ -1,8 +1,8 @@
 // ignore_for_file: camel_case_types
 
-import 'package:alumini_job_refer_app/screens/homeScreen.dart';
-import 'package:alumini_job_refer_app/screens/postScreen.dart';
-import 'package:alumini_job_refer_app/screens/profileScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/postScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 
 class navigationBar extends StatefulWidget {
