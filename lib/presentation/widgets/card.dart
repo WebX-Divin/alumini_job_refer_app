@@ -1,22 +1,18 @@
-// ignore_for_file: camel_case_types
-
 import 'package:flutter/material.dart';
+import '../../models/job_models.dart';
 
-class reusableCard extends StatefulWidget {
-  const reusableCard({Key? key}) : super(key: key);
+class reusableCard extends StatelessWidget {
+  final JobModel jobModel;
 
-  @override
-  State<reusableCard> createState() => _reusableCardState();
-}
+  const reusableCard({Key? key, required this.jobModel}) : super(key: key);
 
-class _reusableCardState extends State<reusableCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Card(
-        color: Colors.purple, // Set card color to purple
-        elevation: 5, // Add elevation for a shadow effect
+        color: Colors.purple,
+        elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
@@ -35,9 +31,9 @@ class _reusableCardState extends State<reusableCard> {
                     ),
                     width: 100,
                     height: 40,
-                    child: const Text(
-                      'Full Time',
-                      style: TextStyle(
+                    child: Text(
+                      jobModel.fullTime ? 'Full Time' : 'Intern',
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -51,9 +47,9 @@ class _reusableCardState extends State<reusableCard> {
                     ),
                     width: 100,
                     height: 40,
-                    child: const Text(
-                      'Remote',
-                      style: TextStyle(
+                    child: Text(
+                      jobModel.remote ? 'Remote' : 'On-site',
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -61,46 +57,44 @@ class _reusableCardState extends State<reusableCard> {
                 ],
               ),
               const SizedBox(height: 15),
-              const Text(
-                'Flutter Developer',
-                style: TextStyle(
+              Text(
+                jobModel.role,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(
-                height: 5,
+              const SizedBox(height: 5),
+              Text(
+                jobModel.companyName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white70,
+                  fontSize: 16,
+                ),
               ),
-              const Text(
-                'Silentants Pvt Ltd',
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white70,
-                    fontSize: 16),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Row(
+              const SizedBox(height: 5),
+              Row(
                 children: [
-                  Icon(Icons.location_on, color: Colors.white70),
-                  SizedBox(width: 5),
+                  const Icon(Icons.location_on, color: Colors.white70),
+                  const SizedBox(width: 5),
                   Text(
-                    'Chennai, India',
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white70,
-                        fontSize: 16),
+                    jobModel.location,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white70,
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 5),
               Row(
                 children: [
-                  const Text(
-                    '₹15k to ₹30k/month',
-                    style: TextStyle(
+                  Text(
+                    '₹${jobModel.salary.toString()}/month',
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
                     ),
@@ -113,14 +107,15 @@ class _reusableCardState extends State<reusableCard> {
                     child: const Text(
                       'Apply',
                       style: TextStyle(
-                          color: Colors.purple, fontWeight: FontWeight.bold),
+                        color: Colors.purple,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      backgroundColor:
-                          Colors.white, // Set button color to white
+                      backgroundColor: Colors.white,
                     ),
                   ),
                 ],

@@ -1,5 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
-import 'package:alumini_job_refer_app/presentation/screens/successScreen.dart';
+import 'package:alumini_job_refer_app/presentation/screens/postSuccessScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/data_provider/job_data_provider.dart';
@@ -47,7 +49,7 @@ class _PostScreenState extends State<PostScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const successScreen(),
+            builder: (context) => const PostSuccessScreen(),
           ),
         );
       }
@@ -226,21 +228,24 @@ class _PostScreenState extends State<PostScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
-                  _saveChanges();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                ),
-                child: const Text(
-                  'Post',
-                  softWrap: true,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _saveChanges();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 150, vertical: 20),
+                  ),
+                  child: const Text(
+                    'Post',
+                    softWrap: true,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
+import 'package:alumini_job_refer_app/models/job_models.dart';
 
 class JobRepository {
   final JobDataProvider jobDataProvider;
@@ -82,13 +83,29 @@ class JobRepository {
     }
   }
 
-  Future<List<dynamic>> fetchPosts() async {
+  Future<List<JobModel>> fetchJobs() async {
     String listPostsEndpoint = 'list_posts';
 
     try {
-      String response = await jobDataProvider.getData(listPostsEndpoint);
-      List<dynamic> data = jsonDecode(response);
-      return data.cast<Map<String, dynamic>>();
+      final response = await jobDataProvider.getData(listPostsEndpoint);
+      final data = jsonDecode(response) as List;
+      return data.map((job) => JobModel.fromMap(job)).toList();
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<dynamic> sendSkillRatings(Map<String, int> ratings) async {
+    Map<String, int> requestBody = ratings;
+    String predictEndpoint = 'predict';
+
+    try {
+      final response =
+          await jobDataProvider.postData(requestBody, predictEndpoint);
+      final data = jsonDecode(response);
+      if (data != null) {
+        return data;
+      }
     } catch (error) {
       throw error.toString();
     }
