@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/presentation/screens/postSuccessScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +64,7 @@ class _PostScreenState extends State<PostScreen> {
         leading: IconButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+                  MaterialPageRoute(builder: (context) => const MainScreen()));
             },
             icon: const Icon(Icons.arrow_back_ios)),
         centerTitle: true,

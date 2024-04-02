@@ -3,8 +3,7 @@ import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart'
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'presentation/screens/findSkillScreen.dart';
+import 'presentation/screens/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.light(
           useMaterial3: true,
         ),
-        home: const FindSkillScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

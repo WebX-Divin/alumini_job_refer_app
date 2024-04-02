@@ -1,4 +1,4 @@
-import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:flutter/material.dart';
 
 class FindSkillSuccessScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _FindSkillSuccessScreenState extends State<FindSkillSuccessScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
+                          builder: (context) => const MainScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

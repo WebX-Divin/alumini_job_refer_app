@@ -1,7 +1,7 @@
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
-import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
 import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +21,20 @@ class _SignUpState extends State<SignUp> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
 
+  Future<void> _homepage() async {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const MainScreen()));
+  }
+
+  Future<void> _register() async {
+    const snackBar = SnackBar(
+      content: Text('User Already Registered'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignUp()));
+  }
+
   Future<void> _signUp() async {
     if (formKey.currentState!.validate()) {
       final name = nameController.text;
@@ -30,13 +44,12 @@ class _SignUpState extends State<SignUp> {
 
       final result = await jobRepository.signUp(name, email, password, mobile);
 
-      if (result != null) {
-        // Registration successful
+      if (result['error'] == 'Email already registered') {
+        await _register();
+      } else {
         String token = result["token"];
         await TokenHandler.saveToken('token', token);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
-        print('User registered successfully');
+        await _homepage();
       }
     }
   }

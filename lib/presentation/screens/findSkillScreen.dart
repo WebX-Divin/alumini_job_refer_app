@@ -1,6 +1,7 @@
 import 'package:alumini_job_refer_app/presentation/screens/findSkillSuccessScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../../MainScreen.dart';
 import '../../data/data_provider/job_data_provider.dart';
 import '../../data/repository/job_repository.dart';
 
@@ -98,9 +99,15 @@ class _FindSkillScreenState extends State<FindSkillScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()));
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
         centerTitle: true,
         title: const Text(
-          'Rate Yourself',
+          'Find My Skill',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -125,7 +132,7 @@ class _FindSkillScreenState extends State<FindSkillScreen> {
                           horizontal: 150, vertical: 20),
                     ),
                     child: const Text(
-                      'Find My Skill',
+                      'Find',
                       softWrap: true,
                       style: TextStyle(
                         color: Colors.white,

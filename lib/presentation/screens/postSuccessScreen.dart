@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
 
 class PostSuccessScreen extends StatelessWidget {
   const PostSuccessScreen({super.key});
@@ -34,7 +34,7 @@ class PostSuccessScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
+                          builder: (context) => const MainScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
 import 'package:alumini_job_refer_app/presentation/auth_screens/signup.dart';
-import 'package:alumini_job_refer_app/presentation/screens/homeScreen.dart';
 import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
 
 class SignIn extends StatefulWidget {
@@ -23,10 +23,14 @@ class _SignInState extends State<SignIn> {
 
   Future<void> _homepage() async {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+        .push(MaterialPageRoute(builder: (context) => const MainScreen()));
   }
 
   Future<void> _register() async {
+    const snackBar = SnackBar(
+      content: Text('User Not Registered or Invalid Password'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const SignUp()));
   }
@@ -43,10 +47,8 @@ class _SignInState extends State<SignIn> {
         if (responseToken != null) {
           // login success
           await _homepage();
-          print('User logined successfully');
         } else {
           await _register();
-          print('Invalid Token, Register again');
         }
       }
     }
