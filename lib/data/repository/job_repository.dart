@@ -16,7 +16,8 @@ class JobRepository {
       'name': name,
       'email': email,
       'password': password,
-      'mobile': mobile
+      'mobile': mobile,
+      'userType': "Admin"
     };
     String signUpEndpoint = 'signup';
     try {
@@ -85,13 +86,13 @@ class JobRepository {
 
   Future<List<JobModel>> fetchJobs() async {
     String listPostsEndpoint = 'list_posts';
-
     try {
       final response = await jobDataProvider.getData(listPostsEndpoint);
-      final data = jsonDecode(response) as List;
+      final List<dynamic> data = jsonDecode(response);
+
       return data.map((job) => JobModel.fromMap(job)).toList();
     } catch (error) {
-      throw error.toString();
+      throw Exception('Token expired or Invalid token. ');
     }
   }
 

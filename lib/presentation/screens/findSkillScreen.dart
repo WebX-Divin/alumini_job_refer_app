@@ -133,7 +133,6 @@ class _FindSkillScreenState extends State<FindSkillScreen> {
                     ),
                     child: const Text(
                       'Find',
-                      softWrap: true,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

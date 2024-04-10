@@ -2,106 +2,123 @@
 import 'dart:convert';
 
 class JobModel {
+  final String id;
   final String role;
   final String companyName;
+  final String jobDescription;
   final String location;
-  final bool remote;
-  final bool fullTime;
+  final bool isPartTime;
+  final bool isOffice;
   final int salary;
-  final String referral;
-  final String link;
+  final String referralCode;
+  final String applyLink;
+
   JobModel({
+    required this.id,
     required this.role,
     required this.companyName,
+    required this.jobDescription,
     required this.location,
-    required this.remote,
-    required this.fullTime,
+    required this.isPartTime,
+    required this.isOffice,
     required this.salary,
-    required this.referral,
-    required this.link,
+    required this.referralCode,
+    required this.applyLink,
   });
 
   JobModel copyWith({
+    String? id,
     String? role,
     String? companyName,
+    String? jobDescription,
     String? location,
-    bool? remote,
-    bool? fullTime,
+    bool? isPartTime,
+    bool? isOffice,
     int? salary,
-    String? referral,
-    String? link,
+    String? referralCode,
+    String? applyLink,
   }) {
     return JobModel(
+      id: id ?? this.id,
       role: role ?? this.role,
       companyName: companyName ?? this.companyName,
+      jobDescription: jobDescription ?? this.jobDescription,
       location: location ?? this.location,
-      remote: remote ?? this.remote,
-      fullTime: fullTime ?? this.fullTime,
+      isPartTime: isPartTime ?? this.isPartTime,
+      isOffice: isOffice ?? this.isOffice,
       salary: salary ?? this.salary,
-      referral: referral ?? this.referral,
-      link: link ?? this.link,
+      referralCode: referralCode ?? this.referralCode,
+      applyLink: applyLink ?? this.applyLink,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
+      'id': id,
       'role': role,
       'companyName': companyName,
+      'jobDescription': jobDescription,
       'location': location,
-      'remote': remote,
-      'fullTime': fullTime,
+      'isPartTime': isPartTime,
+      'isOffice': isOffice,
       'salary': salary,
-      'referral': referral,
-      'link': link,
+      'referralCode': referralCode,
+      'applyLink': applyLink,
     };
   }
 
   factory JobModel.fromMap(Map<String, dynamic> map) {
     return JobModel(
+      id: map['id'] ?? '',
       role: map['job_role'] ?? '',
       companyName: map['company_name'] ?? '',
+      jobDescription: map['job_description'] ?? '',
       location: map['location'] ?? '',
-      remote: map['is_part_time'] ?? false,
-      fullTime: map['is_office'] ?? false,
-      salary: map['salary'] ?? '',
-      referral: map['referral_code'] ?? '',
-      link: map['apply_link'] ?? '',
+      isPartTime: map['is_part_time'] ?? false,
+      isOffice: map['is_office'] ?? false,
+      salary: map['salary'] ?? 0,
+      referralCode: map['referral_code'] ?? '',
+      applyLink: map['apply_link'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory JobModel.fromJson(String source) =>
-      JobModel.fromMap(json.decode(source) as Map<String, dynamic>);
+      JobModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'JobModel(role: $role, companyName: $companyName, location: $location, remote: $remote, fullTime: $fullTime, salary: $salary, referral: $referral, link: $link)';
+    return 'JobModel(id: $id, role: $role, companyName: $companyName, jobDescription: $jobDescription, location: $location, isPartTime: $isPartTime, isOffice: $isOffice, salary: $salary, referralCode: $referralCode, applyLink: $applyLink)';
   }
 
   @override
   bool operator ==(covariant JobModel other) {
     if (identical(this, other)) return true;
 
-    return other.role == role &&
+    return other.id == id &&
+        other.role == role &&
         other.companyName == companyName &&
+        other.jobDescription == jobDescription &&
         other.location == location &&
-        other.remote == remote &&
-        other.fullTime == fullTime &&
+        other.isPartTime == isPartTime &&
+        other.isOffice == isOffice &&
         other.salary == salary &&
-        other.referral == referral &&
-        other.link == link;
+        other.referralCode == referralCode &&
+        other.applyLink == applyLink;
   }
 
   @override
   int get hashCode {
-    return role.hashCode ^
+    return id.hashCode ^
+        role.hashCode ^
         companyName.hashCode ^
+        jobDescription.hashCode ^
         location.hashCode ^
-        remote.hashCode ^
-        fullTime.hashCode ^
+        isPartTime.hashCode ^
+        isOffice.hashCode ^
         salary.hashCode ^
-        referral.hashCode ^
-        link.hashCode;
+        referralCode.hashCode ^
+        applyLink.hashCode;
   }
 }

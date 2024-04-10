@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
+import 'package:alumini_job_refer_app/presentation/auth_screens/auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
-import 'package:alumini_job_refer_app/presentation/auth_screens/signup.dart';
 import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
 
 class SignIn extends StatefulWidget {
@@ -28,11 +28,11 @@ class _SignInState extends State<SignIn> {
 
   Future<void> _register() async {
     const snackBar = SnackBar(
-      content: Text('User Not Registered or Invalid Password'),
+      content: Text('User Not Registered'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SignUp()));
+        .push(MaterialPageRoute(builder: (context) => const AuthScreen()));
   }
 
   Future<void> _login() async {
@@ -41,8 +41,12 @@ class _SignInState extends State<SignIn> {
       final mobile = mobileController.text;
 
       final response = await jobRepository.login(mobile, password);
-
-      if (response != null) {
+      print('the response token is: ${response['token']}');
+      if (response["token"] == null) {
+        final token = response["token"];
+        await TokenHandler.saveToken('token', token);
+        await _homepage();
+      } else if (response != null) {
         final responseToken = await TokenHandler.getToken('token');
         if (responseToken != null) {
           // login success

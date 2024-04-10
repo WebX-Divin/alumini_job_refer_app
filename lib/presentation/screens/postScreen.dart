@@ -241,7 +241,6 @@ class _PostScreenState extends State<PostScreen> {
                   ),
                   child: const Text(
                     'Post',
-                    softWrap: true,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

@@ -1,9 +1,10 @@
 import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
-import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
-import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
+import 'package:alumini_job_refer_app/presentation/auth_screens/auth.dart';
 import 'package:flutter/material.dart';
+import '../../data/token/tokenhandler.dart';
+import '../widgets/textField.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -13,43 +14,55 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final jobRepository = JobRepository(JobDataProvider());
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
+  final _jobRepository = JobRepository(JobDataProvider());
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _mobileController = TextEditingController();
 
-  Future<void> _homepage() async {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const MainScreen()));
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _mobileController.dispose();
+    super.dispose();
   }
 
-  Future<void> _register() async {
+  Future<void> _navigateToHomepage() async {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const MainScreen()),
+    );
+  }
+
+  Future<void> _navigateToLogin() async {
     const snackBar = SnackBar(
-      content: Text('User Already Registered'),
+      content: Text('User already registered'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SignUp()));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const AuthScreen()),
+    );
   }
 
   Future<void> _signUp() async {
-    if (formKey.currentState!.validate()) {
-      final name = nameController.text;
-      final email = emailController.text;
-      final password = passwordController.text;
-      final mobile = mobileController.text;
+    if (_formKey.currentState!.validate()) {
+      final name = _nameController.text;
+      final email = _emailController.text;
+      final password = _passwordController.text;
+      final mobile = _mobileController.text;
 
-      final result = await jobRepository.signUp(name, email, password, mobile);
+      final result = await _jobRepository.signUp(name, email, password, mobile);
 
       if (result['error'] == 'Email already registered') {
-        await _register();
+        await _navigateToLogin();
       } else {
-        String token = result["token"];
+        final token = result["token"];
         await TokenHandler.saveToken('token', token);
-        await _homepage();
+        await _navigateToHomepage();
       }
     }
   }
@@ -71,11 +84,11 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Form(
-              key: formKey,
+              key: _formKey,
               child: Column(
                 children: [
                   CustomTextField(
-                    textEditingController: nameController,
+                    textEditingController: _nameController,
                     iconData: Icons.person,
                     hintText: 'Name',
                     isVisible: false,
@@ -88,7 +101,7 @@ class _SignUpState extends State<SignUp> {
                     },
                   ),
                   CustomTextField(
-                    textEditingController: emailController,
+                    textEditingController: _emailController,
                     iconData: Icons.email,
                     hintText: 'Email',
                     isVisible: false,
@@ -101,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                     },
                   ),
                   CustomTextField(
-                    textEditingController: mobileController,
+                    textEditingController: _mobileController,
                     iconData: Icons.phone,
                     hintText: 'Mobile',
                     isVisible: false,
@@ -114,7 +127,7 @@ class _SignUpState extends State<SignUp> {
                     },
                   ),
                   CustomTextField(
-                    textEditingController: passwordController,
+                    textEditingController: _passwordController,
                     iconData: Icons.lock,
                     hintText: 'Password',
                     isVisible: true,
@@ -127,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                     },
                   ),
                   CustomTextField(
-                    textEditingController: confirmPasswordController,
+                    textEditingController: _confirmPasswordController,
                     iconData: Icons.lock,
                     hintText: 'Confirm Password',
                     isVisible: true,
@@ -139,17 +152,15 @@ class _SignUpState extends State<SignUp> {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   ElevatedButton(
-                    onPressed: () {
-                      _signUp();
-                    },
+                    onPressed: _signUp,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 20),
+                        horizontal: 50,
+                        vertical: 20,
+                      ),
                     ),
                     child: const Text(
                       'Register',

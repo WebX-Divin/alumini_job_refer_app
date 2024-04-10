@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Image.asset('images/logo.png'),
             ),
             const Text(
-              'Alumini Job Refer App - AI Assisted',
+              'Alumini Job Refer App with ML Skill Finder',
               style: TextStyle(fontSize: 10, color: Colors.black),
             )
           ],

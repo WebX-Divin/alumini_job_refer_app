@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       )..fetchJobs(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Alumini Job Refer App - AI Assisted',
+        title: 'Alumini Job Refer App with ML Skill Finder',
         theme: ThemeData.light(
           useMaterial3: true,
         ),

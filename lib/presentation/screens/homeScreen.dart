@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       )..fetchJobs(),
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
               const SizedBox(height: 13),
