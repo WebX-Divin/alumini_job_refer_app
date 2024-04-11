@@ -1,3 +1,4 @@
+import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/findSkillScreen.dart';
 import 'presentation/screens/homeScreen.dart';
@@ -13,12 +14,37 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  final List<Widget> _screens = [
+  String? userType;
+
+  @override
+  void initState() {
+    super.initState();
+    _userTypeData();
+  }
+
+  Future<void> _userTypeData() async {
+    userType = await TokenHandler.getData("userType");
+  }
+
+  final List<Widget> _screensForAlumini = [
     const HomeScreen(),
     const PostScreen(),
+    const ProfileScreen(),
+  ];
+
+  final List<Widget> _screensForStudent = [
+    const HomeScreen(),
     const FindSkillScreen(),
     const ProfileScreen(),
   ];
+
+  List<Widget> get _screens {
+    if (userType == 'Admin') {
+      return _screensForAlumini;
+    } else {
+      return _screensForStudent;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +62,38 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class navigationBar extends StatelessWidget {
+class navigationBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onTap;
 
   const navigationBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onTap,
-  }) : super(key: key);
+  });
+
+  @override
+  State<navigationBar> createState() => _navigationBarState();
+}
+
+class _navigationBarState extends State<navigationBar> {
+  String? userType;
+
+  @override
+  void initState() {
+    super.initState();
+    _userTypeData();
+  }
+
+  Future<void> _userTypeData() async {
+    userType = await TokenHandler.getData("userType");
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
+      currentIndex: widget.currentIndex,
+      onTap: widget.onTap,
       iconSize: 24.0,
       unselectedItemColor: Colors.blueGrey,
       selectedItemColor: Colors.purple,
@@ -58,8 +101,9 @@ class navigationBar extends StatelessWidget {
       selectedIconTheme: const IconThemeData(color: Colors.purple),
       items: [
         _buildNavItem(Icons.home, 'Home'),
-        _buildNavItem(Icons.add, 'Post'),
-        _buildNavItem(Icons.fitbit_outlined, 'Finder'),
+        userType == 'Admin'
+            ? _buildNavItem(Icons.add, 'Post')
+            : _buildNavItem(Icons.fitbit_sharp, 'Skill Finder'),
         _buildNavItem(Icons.person, 'Profile'),
       ],
     );

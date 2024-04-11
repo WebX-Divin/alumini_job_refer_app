@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 
 class JobDataProvider {
   Future postData(Map<String, dynamic> body, String endpoint) async {
-    String url = 'https://d4ed-20-55-126-194.ngrok-free.app';
+    String url = 'https://b294-20-172-24-129.ngrok-free.app';
     String fullUrl = '$url/$endpoint';
-    String? token = await TokenHandler.getToken('token');
+    String? token = await TokenHandler.getData('token');
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -26,9 +26,9 @@ class JobDataProvider {
   }
 
   Future<String> getData(String endpoint) async {
-    String url = 'https://d4ed-20-55-126-194.ngrok-free.app';
+    String url = 'https://b294-20-172-24-129.ngrok-free.app';
     String fullUrl = '$url/$endpoint';
-    String? token = await TokenHandler.getToken('token');
+    String? token = await TokenHandler.getData('token');
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'

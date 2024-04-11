@@ -61,7 +61,7 @@ class _SignUpState extends State<SignUp> {
         await _navigateToLogin();
       } else {
         final token = result["token"];
-        await TokenHandler.saveToken('token', token);
+        await TokenHandler.saveData('token', token);
         await _navigateToHomepage();
       }
     }

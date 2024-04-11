@@ -21,7 +21,8 @@ class _SignInState extends State<SignIn> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Future<void> _homepage() async {
+  Future<void> _homepage(String userType) async {
+    await TokenHandler.saveData("userType", userType);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const MainScreen()));
   }
@@ -41,16 +42,16 @@ class _SignInState extends State<SignIn> {
       final mobile = mobileController.text;
 
       final response = await jobRepository.login(mobile, password);
-      print('the response token is: ${response['token']}');
       if (response["token"] == null) {
         final token = response["token"];
-        await TokenHandler.saveToken('token', token);
-        await _homepage();
+        final userType = response["userType"];
+        await TokenHandler.saveData('token', token);
+        await _homepage(userType);
       } else if (response != null) {
-        final responseToken = await TokenHandler.getToken('token');
+        final responseToken = await TokenHandler.getData('token');
         if (responseToken != null) {
-          // login success
-          await _homepage();
+          final userType = response["userType"];
+          await _homepage(userType);
         } else {
           await _register();
         }
