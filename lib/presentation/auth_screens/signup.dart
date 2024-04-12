@@ -22,6 +22,8 @@ class _SignUpState extends State<SignUp> {
   final _confirmPasswordController = TextEditingController();
   final _mobileController = TextEditingController();
 
+  String? _selectedRadioValue = 'Student';
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -54,14 +56,18 @@ class _SignUpState extends State<SignUp> {
       final email = _emailController.text;
       final password = _passwordController.text;
       final mobile = _mobileController.text;
+      final userType = _selectedRadioValue!;
 
-      final result = await _jobRepository.signUp(name, email, password, mobile);
+      final result =
+          await _jobRepository.signUp(name, email, password, mobile, userType);
 
       if (result['error'] == 'Email already registered') {
         await _navigateToLogin();
       } else {
         final token = result["token"];
+        final user = result["userType"];
         await TokenHandler.saveData('token', token);
+        await TokenHandler.saveData("userType", user);
         await _navigateToHomepage();
       }
     }
@@ -99,6 +105,32 @@ class _SignUpState extends State<SignUp> {
                       }
                       return null;
                     },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Radio<String>(
+                        value: 'Student',
+                        groupValue: _selectedRadioValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedRadioValue = value!;
+                          });
+                        },
+                      ),
+                      const Text('Student'),
+                      const SizedBox(width: 16),
+                      Radio<String>(
+                        value: 'Alumni',
+                        groupValue: _selectedRadioValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedRadioValue = value!;
+                          });
+                        },
+                      ),
+                      const Text('Alumni'),
+                    ],
                   ),
                   CustomTextField(
                     textEditingController: _emailController,

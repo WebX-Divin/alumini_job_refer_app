@@ -10,14 +10,14 @@ class JobRepository {
     this.jobDataProvider,
   );
 
-  Future signUp(
-      String name, String email, String password, String mobile) async {
+  Future signUp(String name, String email, String password, String mobile,
+      String userType) async {
     Map<String, String> requestBody = {
       'name': name,
       'email': email,
       'password': password,
       'mobile': mobile,
-      'userType': "Admin"
+      'userType': userType
     };
     String signUpEndpoint = 'signup';
     try {
