@@ -129,7 +129,7 @@ class _FindSkillScreenState extends State<FindSkillScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 150, vertical: 20),
+                          horizontal: 20, vertical: 20),
                     ),
                     child: const Text(
                       'Find',

@@ -40,7 +40,7 @@ class PostSuccessScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 20),
+                        horizontal: 20, vertical: 20),
                   ),
                   child: const Text(
                     'Go to Home',

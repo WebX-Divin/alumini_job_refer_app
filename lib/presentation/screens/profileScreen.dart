@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:profile/profile.dart';
-
 import '../../MainScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,48 +10,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final List<Profile> profiles = [
-    Profile(
-      imageUrl: "",
-      name: "Dr.T.Akila",
-      website: "",
-      designation: "Project Guide | HoD - IT",
-      email: "",
-      phone_number: "",
-    ),
-    Profile(
-      imageUrl: "",
-      name: "Divin Dass",
-      website: "",
-      designation: "Project Lead",
-      email: "",
-      phone_number: "",
-    ),
-    Profile(
-      imageUrl: "",
-      name: "Sathiyan K",
-      website: "github.com/",
-      designation: "Team Mate",
-      email: "",
-      phone_number: "",
-    ),
-    Profile(
-      imageUrl: "",
-      name: "Meyyakumar I",
-      website: "github.com/",
-      designation: "Team Mate",
-      email: "",
-      phone_number: "",
-    ),
-    Profile(
-      imageUrl: "",
-      name: "Jayakumar E",
-      website: "github.com/",
-      designation: "Team Mate",
-      email: "",
-      phone_number: "",
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,28 +22,116 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: const Icon(Icons.arrow_back_ios)),
         centerTitle: true,
         title: const Text(
-          'Meet Our Creators',
+          'Profile',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: profiles.length,
-              itemBuilder: (context, index) {
-                return Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: profiles[index],
-                  ),
-                );
-              },
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-        ],
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage("images/logo.png"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            profileIems(
+              title: 'Name',
+              subtitle: 'Divin Dass',
+              icon: CupertinoIcons.person,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            profileIems(
+              title: 'Phone',
+              subtitle: '1234567890',
+              icon: CupertinoIcons.phone,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            profileIems(
+              title: 'year of Study',
+              subtitle: 'II year',
+              icon: CupertinoIcons.alt,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            profileIems(
+              title: 'Email',
+              subtitle: '123@gmail.com',
+              icon: CupertinoIcons.mail,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                ),
+                child: const Text(
+                  'Edit',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class profileIems extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  const profileIems({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 5),
+                color: Colors.purple.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 10)
+          ]),
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+        leading: Icon(icon),
+        trailing: Icon(
+          Icons.arrow_forward,
+          color: Colors.grey,
+        ),
+        tileColor: Colors.white,
       ),
     );
   }
