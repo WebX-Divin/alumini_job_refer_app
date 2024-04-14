@@ -1,4 +1,5 @@
 import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/findSkillScreen.dart';
 import 'presentation/screens/homeScreen.dart';
@@ -39,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   List<Widget> get _screens {
-    if (userType == 'Admin') {
+    if (userType == 'Alumni') {
       return _screensForAlumini;
     } else {
       return _screensForStudent;
@@ -100,11 +101,11 @@ class _navigationBarState extends State<navigationBar> {
       unselectedIconTheme: const IconThemeData(color: Colors.blueGrey),
       selectedIconTheme: const IconThemeData(color: Colors.purple),
       items: [
-        _buildNavItem(Icons.home, 'Home'),
-        userType == 'Admin'
-            ? _buildNavItem(Icons.add, 'Post')
-            : _buildNavItem(Icons.fitbit_sharp, 'Skill Finder'),
-        _buildNavItem(Icons.person, 'Profile'),
+        _buildNavItem(CupertinoIcons.home, 'Home'),
+        userType == 'Alumni'
+            ? _buildNavItem(CupertinoIcons.add, 'Post')
+            : _buildNavItem(CupertinoIcons.bolt_fill, 'Skill Finder'),
+        _buildNavItem(CupertinoIcons.person, 'Profile'),
       ],
     );
   }

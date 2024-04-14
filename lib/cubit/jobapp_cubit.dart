@@ -1,3 +1,4 @@
+import 'package:alumini_job_refer_app/models/user_models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/repository/job_repository.dart';
@@ -15,6 +16,17 @@ class JobappCubit extends Cubit<JobappState> {
       emit(JobappLoading());
       final fetchedJobs = await _jobRepository.fetchJobs();
       emit(JobappLoaded(fetchedJobs));
+    } catch (e) {
+      emit(JobappError(e.toString()));
+    }
+  }
+
+  Future<void> fetchUserDetail() async {
+    try {
+      emit(JobappLoading());
+      UserDetailsModel fetchedUserDetail =
+          await _jobRepository.fetchUserDetails();
+      emit(JobappLoadedUser(fetchedUserDetail));
     } catch (e) {
       emit(JobappError(e.toString()));
     }

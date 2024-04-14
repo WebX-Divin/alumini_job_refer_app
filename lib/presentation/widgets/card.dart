@@ -32,7 +32,7 @@ class reusableCard extends StatelessWidget {
                     width: 100,
                     height: 40,
                     child: Text(
-                      jobModel.isPartTime ? 'Intern' : 'Full Time',
+                      jobModel.isPartTime ? 'Intern' : 'Job',
                       style: const TextStyle(
                         color: Colors.white,
                       ),

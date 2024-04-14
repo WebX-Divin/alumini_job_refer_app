@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/models/job_models.dart';
+
+import '../../models/user_models.dart';
 
 class JobRepository {
   final JobDataProvider jobDataProvider;
@@ -89,10 +90,9 @@ class JobRepository {
     try {
       final response = await jobDataProvider.getData(listPostsEndpoint);
       final List<dynamic> data = jsonDecode(response);
-
       return data.map((job) => JobModel.fromMap(job)).toList();
     } catch (error) {
-      throw Exception('Token expired or Invalid token. ');
+      throw Exception('Token expired or Invalid token');
     }
   }
 
@@ -106,6 +106,22 @@ class JobRepository {
       final data = jsonDecode(response);
       if (data != null) {
         return data;
+      }
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<UserDetailsModel> fetchUserDetails() async {
+    String userDetailEndpoint = 'user_details';
+
+    try {
+      final response = await jobDataProvider.getData(userDetailEndpoint);
+      final data = jsonDecode(response);
+      if (data is Map<String, dynamic>) {
+        return UserDetailsModel.fromMap(data);
+      } else {
+        throw 'Invalid data format';
       }
     } catch (error) {
       throw error.toString();

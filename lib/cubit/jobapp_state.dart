@@ -14,6 +14,12 @@ class JobappLoaded extends JobappState {
   JobappLoaded(this.jobs);
 }
 
+class JobappLoadedUser extends JobappState {
+  final UserDetailsModel user;
+
+  JobappLoadedUser(this.user);
+}
+
 class JobappError extends JobappState {
   final String errorMessage;
 
