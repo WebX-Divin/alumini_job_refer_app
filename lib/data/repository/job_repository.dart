@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/models/job_models.dart';
 
-import '../../models/user_models.dart';
-
 class JobRepository {
   final JobDataProvider jobDataProvider;
   JobRepository(
@@ -106,22 +104,6 @@ class JobRepository {
       final data = jsonDecode(response);
       if (data != null) {
         return data;
-      }
-    } catch (error) {
-      throw error.toString();
-    }
-  }
-
-  Future<UserDetailsModel> fetchUserDetails() async {
-    String userDetailEndpoint = 'user_details';
-
-    try {
-      final response = await jobDataProvider.getData(userDetailEndpoint);
-      final data = jsonDecode(response);
-      if (data is Map<String, dynamic>) {
-        return UserDetailsModel.fromMap(data);
-      } else {
-        throw 'Invalid data format';
       }
     } catch (error) {
       throw error.toString();

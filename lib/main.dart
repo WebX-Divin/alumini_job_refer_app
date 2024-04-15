@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
         JobRepository(
           JobDataProvider(),
         ),
-      )
-        ..fetchJobs()
-        ..fetchUserDetail(),
+      )..fetchJobs(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Alumini Job Refer App with ML Skill Finder',

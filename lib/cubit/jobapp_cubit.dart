@@ -1,7 +1,7 @@
-import 'package:alumini_job_refer_app/models/user_models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/repository/job_repository.dart';
+import '../data/token/tokenhandler.dart';
 import '../models/job_models.dart';
 
 part 'jobapp_state.dart';
@@ -9,7 +9,14 @@ part 'jobapp_state.dart';
 class JobappCubit extends Cubit<JobappState> {
   final JobRepository _jobRepository;
 
-  JobappCubit(this._jobRepository) : super(JobappInitial());
+  String? name;
+  String? mobile;
+  String? email;
+  String? userType;
+
+  JobappCubit(this._jobRepository) : super(JobappInitial()) {
+    userDetails();
+  }
 
   Future<void> fetchJobs() async {
     try {
@@ -21,14 +28,19 @@ class JobappCubit extends Cubit<JobappState> {
     }
   }
 
-  Future<void> fetchUserDetail() async {
+  Future<void> userDetails() async {
     try {
-      emit(JobappLoading());
-      UserDetailsModel fetchedUserDetail =
-          await _jobRepository.fetchUserDetails();
-      emit(JobappLoadedUser(fetchedUserDetail));
+      name = await TokenHandler.getData("name");
+      mobile = await TokenHandler.getData("mobile");
+      email = await TokenHandler.getData("email");
+      userType = await TokenHandler.getData("userType");
     } catch (e) {
-      emit(JobappError(e.toString()));
+      print("Error fetching user details: $e");
     }
   }
+
+  String? get userName => name;
+  String? get userMobile => mobile;
+  String? get userEmail => email;
+  String? get userUserType => userType;
 }

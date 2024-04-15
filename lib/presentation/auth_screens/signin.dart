@@ -42,19 +42,16 @@ class _SignInState extends State<SignIn> {
       final mobile = mobileController.text;
 
       final response = await jobRepository.login(mobile, password);
-      print(response);
-      final token = response["token"];
-      print(token);
-      final userType = response["userType"];
       if (response["token"] == null) {
-        await TokenHandler.saveData('token', token);
-        await _homepage(userType);
+        await _register();
       } else if (response != null) {
-        final responseToken = await TokenHandler.getData('token');
-        if (responseToken != null) {
-          final userType = response["userType"];
-          await _homepage(userType);
-        }
+        await TokenHandler.saveData("name", response['name']);
+        await TokenHandler.saveData("mobile", response['mobile']);
+        await TokenHandler.saveData("email", response['email']);
+        await TokenHandler.saveData("token", response['token']);
+        await TokenHandler.saveData("userType", response['userType']);
+        final userType = response["userType"];
+        await _homepage(userType);
       }
     }
   }
