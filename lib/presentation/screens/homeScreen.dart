@@ -20,16 +20,17 @@ class HomeScreen extends StatelessWidget {
       )..fetchJobs(),
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 13),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 10),
                       child: TextField(
                         decoration: InputDecoration(
                           prefixIcon: const Icon(

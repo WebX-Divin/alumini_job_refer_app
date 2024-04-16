@@ -29,29 +29,24 @@ class _FindSkillSuccessScreenState extends State<FindSkillSuccessScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16.0),
-              SizedBox(
-                width:
-                    double.infinity, // Make the button width match the parent
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                  ),
-                  child: const Text(
-                    'Go to Home',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+              const SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MainScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                ),
+                child: const Text(
+                  'Go to Home',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

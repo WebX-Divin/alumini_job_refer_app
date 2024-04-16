@@ -3,6 +3,8 @@ import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart'
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:alumini_job_refer_app/presentation/auth_screens/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubit/jobapp_cubit.dart';
 import '../../data/token/tokenhandler.dart';
 import '../widgets/textField.dart';
 
@@ -34,10 +36,11 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  Future<void> _navigateToHomepage() async {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const MainScreen()),
-    );
+  Future<void> _homepage(String userType) async {
+    await TokenHandler.saveData("userType", userType);
+    await TokenHandler.saveData("isLoggedIn", true.toString());
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const MainScreen()));
   }
 
   Future<void> _navigateToLogin() async {
@@ -64,13 +67,20 @@ class _SignUpState extends State<SignUp> {
       if (result['error'] == 'Email already registered') {
         await _navigateToLogin();
       } else {
-        final token = result["token"];
-        final user = result["userType"];
-        await TokenHandler.saveData('token', token);
-        await TokenHandler.saveData("userType", user);
-        await _navigateToHomepage();
+        await TokenHandler.saveData("name", result['name']);
+        await TokenHandler.saveData("mobile", result['mobile']);
+        await TokenHandler.saveData("email", result['email']);
+        await TokenHandler.saveData("token", result['token']);
+        await TokenHandler.saveData("userType", result['userType']);
+        final userType = result["userType"];
+        onLoginSuccess();
+        await _homepage(userType);
       }
     }
+  }
+
+  void onLoginSuccess() {
+    context.read<JobappCubit>().userDetails();
   }
 
   @override

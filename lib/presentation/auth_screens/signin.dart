@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
 import 'package:alumini_job_refer_app/presentation/widgets/textField.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../cubit/jobapp_cubit.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -23,6 +26,7 @@ class _SignInState extends State<SignIn> {
 
   Future<void> _homepage(String userType) async {
     await TokenHandler.saveData("userType", userType);
+    await TokenHandler.saveData("isLoggedIn", true.toString());
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const MainScreen()));
   }
@@ -51,9 +55,14 @@ class _SignInState extends State<SignIn> {
         await TokenHandler.saveData("token", response['token']);
         await TokenHandler.saveData("userType", response['userType']);
         final userType = response["userType"];
+        onLoginSuccess();
         await _homepage(userType);
       }
     }
+  }
+
+  void onLoginSuccess() {
+    context.read<JobappCubit>().userDetails();
   }
 
   @override

@@ -16,11 +16,22 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   String? userType;
+  bool isLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
     _userTypeData();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    final isLoggedInString = await TokenHandler.getData("isLoggedIn");
+    if (isLoggedInString != null && isLoggedInString == "true") {
+      setState(() {
+        isLoggedIn = true;
+      });
+    }
   }
 
   Future<void> _userTypeData() async {

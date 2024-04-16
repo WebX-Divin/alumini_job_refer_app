@@ -114,22 +114,22 @@ class _FindSkillScreenState extends State<FindSkillScreen> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: _skills.length + 1, // Add 1 for the button item
-        itemBuilder: (context, index) {
-          if (index == _skills.length) {
-            // Display the button as the last item
-            return Column(
-              children: [
-                const SizedBox(height: 32),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListView.builder(
+          itemCount: _skills.length + 1, // Add 1 for the button item
+          itemBuilder: (context, index) {
+            if (index == _skills.length) {
+              // Display the button as the last item
+              return Column(
+                children: [
+                  const SizedBox(height: 32),
+                  ElevatedButton(
                     onPressed: _handleUserRatings,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
+                          horizontal: 50, vertical: 20),
                     ),
                     child: const Text(
                       'Find',
@@ -139,73 +139,73 @@ class _FindSkillScreenState extends State<FindSkillScreen> {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
-              ],
-            );
-          } else {
-            // Display the skill items
-            final skill = _skills[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    skill,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: DropdownButton<int>(
-                      isExpanded: true,
-                      value: _ratings[skill],
-                      onChanged: (value) {
-                        setState(() {
-                          _ratings[skill] = value!;
-                          _skillControllers[skill]?.text = value.toString();
-                        });
-                      },
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text('Not Interested'),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text('Poor'),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text('Beginner'),
-                        ),
-                        DropdownMenuItem(
-                          value: 5,
-                          child: Text('Average'),
-                        ),
-                        DropdownMenuItem(
-                          value: 6,
-                          child: Text('Intermediate'),
-                        ),
-                        DropdownMenuItem(
-                          value: 7,
-                          child: Text('Excellent'),
-                        ),
-                        DropdownMenuItem(
-                          value: 9,
-                          child: Text('Professional'),
-                        ),
-                      ],
+                  const SizedBox(height: 16),
+                ],
+              );
+            } else {
+              // Display the skill items
+              final skill = _skills[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      skill,
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                ),
-              ],
-            );
-          }
-        },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: DropdownButton<int>(
+                        isExpanded: true,
+                        value: _ratings[skill],
+                        onChanged: (value) {
+                          setState(() {
+                            _ratings[skill] = value!;
+                            _skillControllers[skill]?.text = value.toString();
+                          });
+                        },
+                        items: const [
+                          DropdownMenuItem(
+                            value: 1,
+                            child: Text('Not Interested'),
+                          ),
+                          DropdownMenuItem(
+                            value: 2,
+                            child: Text('Poor'),
+                          ),
+                          DropdownMenuItem(
+                            value: 3,
+                            child: Text('Beginner'),
+                          ),
+                          DropdownMenuItem(
+                            value: 5,
+                            child: Text('Average'),
+                          ),
+                          DropdownMenuItem(
+                            value: 6,
+                            child: Text('Intermediate'),
+                          ),
+                          DropdownMenuItem(
+                            value: 7,
+                            child: Text('Excellent'),
+                          ),
+                          DropdownMenuItem(
+                            value: 9,
+                            child: Text('Professional'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }
