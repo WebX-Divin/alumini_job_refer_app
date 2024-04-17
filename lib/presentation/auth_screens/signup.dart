@@ -63,7 +63,6 @@ class _SignUpState extends State<SignUp> {
 
       final result =
           await _jobRepository.signUp(name, email, password, mobile, userType);
-      print(result);
 
       if (result['error'] == 'Email already registered') {
         await _navigateToLogin();
