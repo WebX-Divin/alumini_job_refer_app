@@ -1,10 +1,13 @@
+import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:flutter/material.dart';
+import '../../data/repository/job_repository.dart';
 import '../../models/job_models.dart';
 
 class reusableCard extends StatelessWidget {
   final JobModel jobModel;
 
-  const reusableCard({Key? key, required this.jobModel}) : super(key: key);
+  reusableCard({super.key, required this.jobModel});
+  final jobRepository = JobRepository(JobDataProvider());
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,8 @@ class reusableCard extends StatelessWidget {
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () {
-                      // Handle button press
+                      jobRepository.launchInWebView(
+                          Uri.parse('https://${jobModel.applyLink}'));
                     },
                     child: const Text(
                       'Apply',

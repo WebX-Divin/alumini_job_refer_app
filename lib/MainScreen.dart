@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   List<Widget> get _screens {
-    if (userType == 'Alumni') {
+    if (userType == 'Alumni' || userType == 'Admin') {
       return _screensForAlumini;
     } else {
       return _screensForStudent;

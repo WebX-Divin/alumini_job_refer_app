@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/models/job_models.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobRepository {
   final JobDataProvider jobDataProvider;
@@ -107,6 +108,12 @@ class JobRepository {
       }
     } catch (error) {
       throw error.toString();
+    }
+  }
+
+  Future<void> launchInWebView(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppWebView)) {
+      throw Exception('Could not launch $url');
     }
   }
 }

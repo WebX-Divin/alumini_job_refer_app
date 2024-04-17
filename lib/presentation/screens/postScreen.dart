@@ -75,7 +75,7 @@ class _PostScreenState extends State<PostScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
               Form(
@@ -228,23 +228,20 @@ class _PostScreenState extends State<PostScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    _saveChanges();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                  ),
-                  child: const Text(
-                    'Post',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+              ElevatedButton(
+                onPressed: () {
+                  _saveChanges();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                ),
+                child: const Text(
+                  'Post',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

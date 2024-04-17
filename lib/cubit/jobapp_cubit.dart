@@ -35,7 +35,7 @@ class JobappCubit extends Cubit<JobappState> {
       email = await TokenHandler.getData("email");
       userType = await TokenHandler.getData("userType");
     } catch (e) {
-      print("Error fetching user details: $e");
+      throw e.toString();
     }
   }
 
