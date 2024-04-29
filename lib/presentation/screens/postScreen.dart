@@ -214,7 +214,7 @@ class _PostScreenState extends State<PostScreen> {
                       controller: _applyLinkController,
                       decoration: const InputDecoration(
                         suffixIcon: Icon(Icons.link),
-                        labelText: 'Apply Link',
+                        labelText: 'Apply Link (without http)',
                         border: OutlineInputBorder(),
                       ),
                       validator: (value) {

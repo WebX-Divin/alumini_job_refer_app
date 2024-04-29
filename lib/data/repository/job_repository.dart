@@ -112,7 +112,7 @@ class JobRepository {
   }
 
   Future<void> launchInWebView(Uri url) async {
-    if (!await launchUrl(url, mode: LaunchMode.inAppWebView)) {
+    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
       throw Exception('Could not launch $url');
     }
   }

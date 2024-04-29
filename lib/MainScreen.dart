@@ -1,4 +1,5 @@
 import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/findSkillScreen.dart';
@@ -22,16 +23,6 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _userTypeData();
-    checkLoginStatus();
-  }
-
-  Future<void> checkLoginStatus() async {
-    final isLoggedInString = await TokenHandler.getData("isLoggedIn");
-    if (isLoggedInString != null && isLoggedInString == "true") {
-      setState(() {
-        isLoggedIn = true;
-      });
-    }
   }
 
   Future<void> _userTypeData() async {
@@ -61,70 +52,22 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: navigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      //body: _screens[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
       ),
-    );
-  }
-}
-
-class navigationBar extends StatefulWidget {
-  final int currentIndex;
-  final Function(int) onTap;
-
-  const navigationBar({
-    super.key,
-    required this.currentIndex,
-    required this.onTap,
-  });
-
-  @override
-  State<navigationBar> createState() => _navigationBarState();
-}
-
-class _navigationBarState extends State<navigationBar> {
-  String? userType;
-
-  @override
-  void initState() {
-    super.initState();
-    _userTypeData();
-  }
-
-  Future<void> _userTypeData() async {
-    userType = await TokenHandler.getData("userType");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: widget.currentIndex,
-      onTap: widget.onTap,
-      iconSize: 24.0,
-      unselectedItemColor: Colors.blueGrey,
-      selectedItemColor: Colors.purple,
-      unselectedIconTheme: const IconThemeData(color: Colors.blueGrey),
-      selectedIconTheme: const IconThemeData(color: Colors.purple),
-      items: [
-        _buildNavItem(CupertinoIcons.home, 'Home'),
-        userType == 'Alumni'
-            ? _buildNavItem(CupertinoIcons.add, 'Post')
-            : _buildNavItem(CupertinoIcons.bolt_fill, 'Skill Finder'),
-        _buildNavItem(CupertinoIcons.person, 'Profile'),
-      ],
-    );
-  }
-
-  BottomNavigationBarItem _buildNavItem(IconData icon, String label) {
-    return BottomNavigationBarItem(
-      icon: Icon(icon),
-      label: label,
+      bottomNavigationBar: userType != null
+          ? navigationBar(
+              userType: userType!,
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            )
+          : const SizedBox(),
     );
   }
 }

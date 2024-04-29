@@ -1,4 +1,4 @@
-import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
+import 'package:alumini_job_refer_app/presentation/widgets/profile_iems.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
@@ -9,10 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../auth_screens/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -26,7 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _logout() async {
-    await TokenHandler.getData("isLoggedIn");
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const AuthScreen()));
   }
@@ -149,42 +148,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ProfileItems extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  const ProfileItems({
-    Key? key,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, 5),
-            color: Colors.purple.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 10,
-          )
-        ],
-      ),
-      child: ListTile(
-        title: Text(title),
-        subtitle: Text(subtitle),
-        leading: Icon(icon),
-        tileColor: Colors.white,
       ),
     );
   }

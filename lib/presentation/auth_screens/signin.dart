@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/presentation/auth_screens/auth.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +25,10 @@ class _SignInState extends State<SignIn> {
 
   Future<void> _homepage(String userType) async {
     await TokenHandler.saveData("userType", userType);
-    await TokenHandler.saveData("isLoggedIn", true.toString());
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const MainScreen()));
+
+    if (mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
+    }
   }
 
   Future<void> _register() async {
@@ -46,6 +46,7 @@ class _SignInState extends State<SignIn> {
       final mobile = mobileController.text;
 
       final response = await jobRepository.login(mobile, password);
+      print('the response from login: ${response['token']}');
       if (response["token"] == null) {
         await _register();
       } else if (response != null) {
