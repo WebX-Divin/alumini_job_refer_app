@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/presentation/auth_screens/auth.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,9 @@ class _SignInState extends State<SignIn> {
     await TokenHandler.saveData("userType", userType);
 
     if (mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
+      // Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const MainScreen()));
     }
   }
 

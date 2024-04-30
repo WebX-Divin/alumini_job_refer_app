@@ -1,8 +1,8 @@
+import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class navigationBar extends StatefulWidget {
-  final String userType;
   final int currentIndex;
   final Function(int) onTap;
 
@@ -10,7 +10,6 @@ class navigationBar extends StatefulWidget {
     super.key,
     required this.currentIndex,
     required this.onTap,
-    required this.userType,
   });
 
   @override
@@ -18,6 +17,17 @@ class navigationBar extends StatefulWidget {
 }
 
 class _navigationBarState extends State<navigationBar> {
+  String? userType;
+  @override
+  void initState() {
+    super.initState();
+    _userTypeData();
+  }
+
+  Future<void> _userTypeData() async {
+    userType = await TokenHandler.getData("userType");
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -32,7 +42,7 @@ class _navigationBarState extends State<navigationBar> {
       selectedIconTheme: const IconThemeData(color: Colors.purple),
       items: [
         _buildNavItem(CupertinoIcons.home, ''),
-        widget.userType == 'Alumni' || widget.userType == 'Admin'
+        userType == 'Alumni' || userType == 'Admin'
             ? _buildNavItem(CupertinoIcons.add, '')
             : _buildNavItem(CupertinoIcons.bolt_fill, ''),
         _buildNavItem(CupertinoIcons.person, ''),

@@ -6,9 +6,8 @@ import 'package:alumini_job_refer_app/main.dart';
 void main() {
   testWidgets('Test MyApp widget', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(
-        isAuthenticated:
-            false)); // or true if you want to test authenticated state
+    await tester.pumpWidget(
+        const MyApp()); // or true if you want to test authenticated state
 
     // Verify that the SplashScreen is displayed initially.
     expect(find.byType(SplashScreen), findsOneWidget);

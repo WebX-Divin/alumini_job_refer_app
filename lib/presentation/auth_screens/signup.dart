@@ -1,3 +1,4 @@
+import 'package:alumini_job_refer_app/MainScreen.dart';
 import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
 import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
 import 'package:alumini_job_refer_app/presentation/auth_screens/auth.dart';
@@ -39,7 +40,9 @@ class _SignUpState extends State<SignUp> {
     await TokenHandler.saveData("userType", userType);
 
     if (mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
+      // Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const MainScreen()));
     }
   }
 

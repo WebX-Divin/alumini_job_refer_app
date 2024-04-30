@@ -7,8 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubit/jobapp_cubit.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +40,12 @@ class HomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 10),
                       child: TextField(
+                        controller: _searchController,
+                        onChanged: (value) {
+                          setState(() {
+                            _searchQuery = value;
+                          });
+                        },
                         decoration: InputDecoration(
                           prefixIcon: const Icon(
                             Icons.search,
@@ -73,10 +87,16 @@ class HomeScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is JobappLoaded) {
+                      final filteredJobs = state.jobs
+                          .where((job) => job.role
+                              .toLowerCase()
+                              .contains(_searchQuery.toLowerCase()))
+                          .toList();
+
                       return ListView.builder(
-                        itemCount: state.jobs.length,
+                        itemCount: filteredJobs.length,
                         itemBuilder: (context, index) {
-                          return reusableCard(jobModel: state.jobs[index]);
+                          return reusableCard(jobModel: filteredJobs[index]);
                         },
                       );
                     } else if (state is JobappError) {
@@ -85,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     } else {
                       return const Center(
-                        child: Text('Something went wrong'),
+                        child: Text('Please Contact your admin'),
                       );
                     }
                   },
