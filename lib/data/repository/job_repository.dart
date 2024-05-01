@@ -125,7 +125,9 @@ class JobRepository {
       final response =
           await jobDataProvider.deleteData(requestBody, deleteEndpoint);
       final data = jsonDecode(response);
-      print('Is user deleted: $data');
+      if (data != null) {
+        return data;
+      }
     } catch (e) {
       throw Exception('Unable to delete the user');
     }
