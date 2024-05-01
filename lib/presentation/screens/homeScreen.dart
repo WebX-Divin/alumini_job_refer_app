@@ -26,92 +26,93 @@ class _HomeScreenState extends State<HomeScreen> {
           JobDataProvider(),
         ),
       )..fetchJobs(),
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 10),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (value) {
-                          setState(() {
-                            _searchQuery = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.search,
-                          ),
-                          hintText: 'Search',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              15.0,
+      child: SafeArea(
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 10),
+                        child: TextField(
+                          controller: _searchController,
+                          onChanged: (value) {
+                            setState(() {
+                              _searchQuery = value;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.search,
+                            ),
+                            hintText: 'Search',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                15.0,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Handle settings icon tap
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.purple,
-                      ),
-                      child: const Icon(Icons.settings, color: Colors.white),
+                    const SizedBox(
+                      width: 5,
                     ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: BlocBuilder<JobappCubit, JobappState>(
-                  builder: (context, state) {
-                    if (state is JobappLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is JobappLoaded) {
-                      final filteredJobs = state.jobs
-                          .where((job) => job.role
-                              .toLowerCase()
-                              .contains(_searchQuery.toLowerCase()))
-                          .toList();
-
-                      return ListView.builder(
-                        itemCount: filteredJobs.length,
-                        itemBuilder: (context, index) {
-                          return reusableCard(jobModel: filteredJobs[index]);
-                        },
-                      );
-                    } else if (state is JobappError) {
-                      return Center(
-                        child: Text(state.errorMessage),
-                      );
-                    } else {
-                      return const Center(
-                        child: Text('Please Contact your admin'),
-                      );
-                    }
-                  },
+                    GestureDetector(
+                      onTap: () {
+                        // Handle settings icon tap
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.purple,
+                        ),
+                        child: const Icon(Icons.settings, color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: BlocBuilder<JobappCubit, JobappState>(
+                    builder: (context, state) {
+                      if (state is JobappLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is JobappLoaded) {
+                        final filteredJobs = state.jobs
+                            .where((job) => job.role
+                                .toLowerCase()
+                                .contains(_searchQuery.toLowerCase()))
+                            .toList();
+
+                        return ListView.builder(
+                          itemCount: filteredJobs.length,
+                          itemBuilder: (context, index) {
+                            return reusableCard(jobModel: filteredJobs[index]);
+                          },
+                        );
+                      } else if (state is JobappError) {
+                        return Center(
+                          child: Text(state.errorMessage),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text('Please Contact your admin'),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

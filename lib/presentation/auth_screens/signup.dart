@@ -39,10 +39,21 @@ class _SignUpState extends State<SignUp> {
   Future<void> _homepage(String userType) async {
     await TokenHandler.saveData("userType", userType);
 
-    if (mounted) {
-      // Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const MainScreen()));
+    if (await TokenHandler.getData('token') != null) {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MainScreen()));
+      }
+    } else {
+      if (mounted) {
+        const snackBar = SnackBar(
+          content: Text('Token Expired'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const AuthScreen()),
+        );
+      }
     }
   }
 

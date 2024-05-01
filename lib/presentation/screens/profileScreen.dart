@@ -1,3 +1,6 @@
+import 'package:alumini_job_refer_app/data/data_provider/job_data_provider.dart';
+import 'package:alumini_job_refer_app/data/repository/job_repository.dart';
+import 'package:alumini_job_refer_app/data/token/tokenhandler.dart';
 import 'package:alumini_job_refer_app/presentation/widgets/profile_iems.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late JobappCubit jobappCubit;
+  final jobRepository = JobRepository(JobDataProvider());
 
   @override
   void initState() {
@@ -152,6 +156,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Future<void> deleteUser() async {
+    final mobile = await TokenHandler.getData('mobile');
+    await jobRepository.deleteUser(mobile.toString());
+  }
+
   Future<void> _showDeleteConfirmationDialog() async {
     bool? confirmed = await showDialog<bool>(
       context: context,
@@ -165,7 +174,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () {
+                deleteUser();
+                Navigator.of(context).pop(true);
+              },
               child: const Text('Delete'),
             ),
           ],
@@ -174,10 +186,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     if (confirmed == true) {
-      // Navigate to the AuthScreen after deleting the account
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const AuthScreen()),
+      const snackBar = SnackBar(
+        content: Text('User Deleted Successfully'),
+        backgroundColor: Colors.black26,
       );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        // Navigate to the AuthScreen after deleting the account
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const AuthScreen()),
+        );
+      }
     }
   }
 }

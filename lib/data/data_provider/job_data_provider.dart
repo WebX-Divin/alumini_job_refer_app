@@ -42,4 +42,23 @@ class JobDataProvider {
       throw error.toString();
     }
   }
+
+  Future deleteData(Map<String, dynamic> body, String endpoint) async {
+    String url = 'https://smart-insect-cleanly.ngrok-free.app';
+    String fullUrl = '$url/$endpoint';
+    String? token = await TokenHandler.getData('token');
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+
+    try {
+      final responseJson = jsonEncode(body);
+      final http.Response response = await http.delete(Uri.parse(fullUrl),
+          headers: headers, body: responseJson);
+      return response.body;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
 }

@@ -116,4 +116,18 @@ class JobRepository {
       throw Exception('Could not launch $url');
     }
   }
+
+  Future deleteUser(String mobile) async {
+    Map<String, String> requestBody = {'mobile': mobile};
+    String deleteEndpoint = 'delete_user';
+
+    try {
+      final response =
+          await jobDataProvider.deleteData(requestBody, deleteEndpoint);
+      final data = jsonDecode(response);
+      print('Is user deleted: $data');
+    } catch (e) {
+      throw Exception('Unable to delete the user');
+    }
+  }
 }
